@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plastizyme</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@400;700&display=swap">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4; /* Light background color for contrast */
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: #fff;
+            padding: 15px 20px;
+            position: sticky; /* Makes the header sticky */
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #fff; /* Very thin white line */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            max-width: 150px; /* Adjusted size */
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .menu-toggle:focus {
+            outline: none;
+        }
+
+        .main-nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .main-nav ul {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .main-nav ul li {
+            margin: 0 15px;
+        }
+
+        .main-nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
+        }
+
+        .main-nav ul li a:hover {
+            color: #e67e22; /* Highlight color on hover */
+        }
+
+        /* Hero Section Styles */
+        .hero {
+            position: relative;
+            height: 80vh; /* Adjusted height for balance */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+            overflow: hidden;
+            padding: 0 20px;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+    }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            max-width: 800px; /* Wider for better text alignment */
+            padding: 20px;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.15); /* Light transparent background */
+            backdrop-filter: blur(5px); /* Blur effect */
+            border-radius: 10px;
+        }
+
+        .hero-content h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5em; /* Reduced size for subtle impact */
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px; /* Slightly reduced spacing */
+        }
+
+        .hero-content p {
+            font-size: 1.2em; /* Slightly reduced size for balance */
+            margin-bottom: 20px;
+        }
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Apply the animation to the hero content */
+.hero-content {
+    animation: fadeIn 1.5s ease-out forwards;
+    opacity: 0; /* Ensures the element is initially hidden */
+}
+
+        .cta-btn {
+            background-color: #e67e22;
+            color: #fff;
+            padding: 12px 24px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .cta-btn:hover {
+            background-color: #d35400;
+        }
+
+.preorder-btn {
+    background-color: #f1c40f; /* Yellow */
+    color: #2c3e50; /* Dark text for contrast */
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.preorder-btn:hover {
+    background-color: #d4ac0d; /* Slightly darker yellow on hover */
+    color: #fff; /* White text for better readability */
+}
+
+
+        /* Content Section Styles */
+        .content-section {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff; /* White background for contrast */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+            text-align: center;
+            margin-bottom: 40px; /* Space between sections */
+        }
+
+        .content-section h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .content-section p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        .content-section h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2em;
+            margin-top: 20px;
+            color: #2c3e50;
+        }
+
+        .content-section .learn-more {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4a6a8b;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+
+        .content-section .learn-more:hover {
+            background-color: #283848;
+        }
+
+        .content-section img {
+            max-width: 100%; /* Adjusted size for viewability */
+            height: auto;
+            border-radius: 10px; /* Rounded corners for images */
+            margin-top: 20px;
+        }
+
+        /* Specific adjustments for Waste and Product sections */
+        #waste img,
+        #product img {
+            max-height: 500px; /* Adjust height as needed */
+            object-fit: cover; /* Ensures aspect ratio is maintained */
+        }
+
+        .side-by-side {
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* Space between images */
+        }
+
+        .side-by-side img {
+            max-width: 100%; /* Adjusted size for viewability */
+            height: auto;
+            border-radius: 10px; /* Rounded corners for images */
+        }
+
+           .kickstarter-logo img {
+            border-radius: 0; /* No rounded corners for Kickstarter logo */
+            max-width: 80%; /* Allows the logo to scale with the screen size */
+            height: auto; /* Maintains aspect ratio */
+            margin-top: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+	}
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+    background: #000;
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+        /* Footer Styles */
+        footer {
+            background-color: #2c3e50;
+            color: #fff;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .footer-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-nav ul li {
+            display: inline;
+            margin: 0 10px;
+        }
+
+        .footer-nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .footer-nav ul li a:hover {
+            color: #e67e22;
+        }
+
+        .social-media a {
+            color: #fff;
+            margin: 0 10px;
+            font-size: 1.2em;
+            transition: color 0.3s ease;
+        }
+
+        .social-media a:hover {
+            color: #e67e22;
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .main-nav {
+                display: none;
+                width: 100%;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                background: #2c3e50;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .main-nav.active {
+                display: flex;
+            }
+
+            .main-nav ul {
+                flex-direction: column;
+                padding: 0;
+            }
+
+            .main-nav ul li {
+                margin: 10px 0;
+            }
+
+        }
+
+        /* Popup Styles */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+        }
+
+        .popup-content {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .popup-content h2 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .popup-content p {
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        .popup-content input {
+            display: block;
+            width: calc(100% - 20px);
+            margin: 10px auto;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .popup-content button {
+            background-color: #e67e22;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+
+        .popup-content button:hover {
+            background-color: #d35400;
+        }
+
+        .popup .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5em;
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="logo-2.png" alt="Plastizyme Logo" class="logo">
+        </div>
+        <button class="menu-toggle" aria-label="Toggle navigation">&#9776;</button>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#PETase">PETase</a></li>
+                <li><a href="#product">Product</a></li>
+                <li><a href="#Pre-order Now" class="preorder-btn">Pre-order Now</a></li>
+                <li><a href="mailto:hello@plastizyme.com?subject=Inquiry&body=Hello,%20I%20would%20like%20to%20learn%20more%20about%20Plastizyme.">
+    Contact
+</a>
+
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <img src="hero-background.jpg" alt="Hero Background Image" class="hero-background">
+        <div class="hero-content">
+            <h1>Empowering a Cleaner Future</h1>
+            <p>Discover how Plastizyme is transforming plastic recycling with innovative solutions that make a difference.</p>
+            <a href="#learn-more" class="cta-btn" id="learn-more-btn">Learn More</a>
+        </div>
+    </section>
+
+    <!-- Content Sections -->
+    <section id="about" class="content-section">
+        <h2>About</h2>
+        
+  <p> Plastizyme was founded at UNC Chapel Hill to push the boundaries of science in tackling plastic pollution. Recognizing that PETase enzymes have advanced to the point of real-world application, we set out to bring enzyme-driven plastic degradation into homes for the first time. </p> 
+
+<strong> The Problem </strong> 
+<p> Plastic waste takes centuries to break down, overwhelming landfills and oceans. Current recycling efforts fail to keep up, leaving the world searching for a better solution. </p> 
+
+<strong> The Opportunity </strong> 
+<p> Breakthroughs in PETase enzymes offer a game-changing way to degrade plastic efficiently—breaking it down at the molecular level instead of relying on industrial recycling. </p> 
+
+   
+ </section>
+    <section id="PETase" class="content-section">
+        <h2>PETase</h2>
+  <strong>What is PETase?</strong>
+<p>
+PETase is a naturally occurring enzyme that <strong>breaks down PET plastic</strong> into its base components, allowing for true biodegradation rather than accumulation in landfills.
+</p>
+<strong>Science in Action</strong>
+<p>Watch PETase at work: The video below demonstrates <strong>PETase PHL7</strong> breaking down clamshell PET packaging within <strong>24 hours</strong>.
+</p>    
+<div class="video-container">
+        <iframe width="560" height="315" 
+            src="https://www.youtube.com/embed/nWfBvRm4640" 
+            title="YouTube video player" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+        </iframe>
+</div>
+<p><strong>Note:</strong> This video is for <strong>educational purposes only</strong>. Plastizyme is <strong>not affiliated</strong> with any entity shown in the video.</p> 
+   
+</section>
+    <section id="product" class="content-section">
+        <h2>Product</h2>
+        <div class="side-by-side">
+            <img src="product-image-1.JPG" alt="Plastizyme Product Image">
+            
+        </div>
+ <strong>An Enzyme-Powered Solution to Plastic Waste</strong>
+<p>The Plastizyme kit lets you experience the power of <strong>PHL7 PETase</strong>, applying it directly to <strong>amorphous PET plastic</strong> to observe real degradation at home.
+</p>
+<strong>Why This Matters</strong>
+<p>Unlike traditional recycling, <strong>which requires high energy and specialized facilities</strong>, this enzyme-driven process <strong>breaks down plastic directly</strong>, offering an alternative path toward eliminating waste.
+</p>
+<strong>How It Works</strong>
+<p> 1️⃣ <strong>Mix the enzyme</strong> with PET plastic. </p>
+<p> 2️⃣ <strong>Observe the breakdown</strong> over time. </p>
+<p> 3️⃣ <strong>Contribute to eliminating plastic waste!</strong> </p>
+
+
+<p>This is a <strong>beta test run</strong>, not a fully commercialized product. You are joining the <strong>pioneering phase</strong> to help bring this technology to market.
+   </p>      </section>
+    <section id="Pre-order Now" class="content-section">
+        <h2>Pre-order Now</h2>
+<strong>Become a Beta Tester—Shape the Future of Plastic Degradation</strong>
+<p>This exclusive beta test is designed for early adopters who want to invest in advancing enzyme-driven plastic breakdown.
+</p>
+<strong>Why Join?</strong>
+<p>✔ <strong>Be part of the first real-world trial</strong> for at-home plastic degradation.</p>
+<p>✔ <strong>Provide usability feedback</strong> to refine and improve the product.</p>
+<p>✔ <strong>Engage directly with the founder</strong> and contribute to a cutting-edge sustainability effort.</p>
+
+<p>💰 <strong>Beta test kits available for $200–$500</strong></p>
+<p>🚀 <strong>Limited spots available—secure yours now!</strong></p>
+<a href="https://www.paypal.com/ncp/payment/X5J83MZEHX5TY" class="cta-btn" target="_blank">Checkout</a>
+        <div class="kickstarter-logo">
+            <img src="kickstarter-logo.png" alt="Kickstarter Logo" style="max-width: 350px; margin-top: 35px;">
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <!-- Footer content -->
+        <div class="footer-nav">
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#PETase">PETase</a></li>
+                <li><a href="#product">Product</a></li>
+                <li><a href="#Pre-order Now">Pre-order Now</a></li>
+                <li><a href="mailto:hello@plastizyme.com?subject=Inquiry&body=Hello,%20I%20would%20like%20to%20learn%20more%20about%20Plastizyme.">
+    Contact
+</a>
+
+            </ul>
+        </div>
+        
+        <p>&copy; 2024 Plastizyme. All rights reserved.</p>
+    </footer>
+
+   <!-- Popup Form -->
+<div id="popup" class="popup">
+    <div class="popup-content">
+        <span class="close" id="popup-close">&times;</span>
+        <h2>Learn More</h2>
+        <p>Enter your contact information to receive more details about Plastizyme.</p>
+        <input type="text" id="name" placeholder="Your Name" required>
+        <input type="email" id="email" placeholder="Your Email" required>
+        <button id="submit-btn">Submit</button>
+    </div>
+</div>
+
+<script>
+    document.querySelector('.menu-toggle').addEventListener('click', function() {
+        var nav = document.querySelector('.main-nav');
+        nav.classList.toggle('active');
+    });
+
+    document.getElementById('learn-more-btn').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('popup').style.display = 'flex';
+    });
+
+    document.getElementById('popup-close').addEventListener('click', function() {
+        document.getElementById('popup').style.display = 'none';
+    });
+
+    document.getElementById('submit-btn').addEventListener('click', function() {
+        var name = document.getElementById('name').value;
+        var email = document.getElementById('email').value;
+
+        if (name && email) {
+            // Google Form Submission (Replace YOUR_FORM_ID and entry.xxxxxx with actual values)
+            var googleFormURL = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSeDiuTbWxq5goPf8VU1zaawrk_Nq3hOHC9uUgYnvjUZYf0puQ/formResponse";
+            var formData = new FormData();
+            formData.append("entry.1625098546", name); // Replace with actual entry ID for "name"
+            formData.append("entry.694019218", email); // Replace with actual entry ID for "email"
+
+            // Submit to Google Form silently
+            fetch(googleFormURL, {
+                method: "POST",
+                body: formData,
+                mode: "no-cors"
+            }).then(() => {
+                alert('Thank you for your interest, ' + name + '! We will be in touch soon.');
+                document.getElementById('popup').style.display = 'none';
+                document.getElementById('name').value = ''; // Clear inputs
+                document.getElementById('email').value = '';
+            }).catch(err => console.error("Submission Error:", err));
+        } else {
+            alert('Please fill out both fields.');
+        }
+    });
+</script>
+
+</body>
+</html>
